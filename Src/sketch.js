@@ -17,7 +17,6 @@ function draw()
 {
     background(125);
     GridManager.drawCells();
-    // image(img, 0, 0);
 }
 
 function keyPressed()
