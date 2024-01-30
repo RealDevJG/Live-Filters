@@ -15,4 +15,4 @@ class Cell
     }
 }
 
-const filters = [() => {}, GreyscaleFilter];
+const filters = [() => {}, GreyscaleFilter, redFilter, greenFilter, blueFilter];
