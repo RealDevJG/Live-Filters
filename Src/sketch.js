@@ -9,17 +9,12 @@ function setup()
 {
     createCanvas(1280, 720);
 
-    for (let i = 0; i < 14; ++i)
-        GridManager.addCell(new Cell(img));
+    for (let i = 0; i < filters.length; i++)
+        GridManager.addCell(new Cell(img, filters[i]));
 }
 
 function draw()
 {
     background(125);
     GridManager.drawCells();
-}
-
-function keyPressed()
-{
-
 }
