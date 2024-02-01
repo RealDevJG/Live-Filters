@@ -1,6 +1,6 @@
 let thresholdSlider;
 
-function threshold(_mask)
+function thresholdFilter(_mask)
 {
     return function(_img)
     {

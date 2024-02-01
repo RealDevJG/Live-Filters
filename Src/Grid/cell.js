@@ -3,27 +3,25 @@ class Cell
     constructor(_img, _filters)
     {
         this.img = _img.get();
-        this.filters = _filters;
+
+        for (const filter of _filters)
+            filter(this.img);
     }
 
     draw(_x, _y, _width, _height)
     {
-        const imgCopy = this.img.get();
-        for (const filter of this.filters)
-            filter(imgCopy);
-
-        image(imgCopy, _x, _y, _width, _height);
+        image(this.img, _x, _y, _width, _height);
     }
 }
 
 const filterPipelines = [
     [() => {}],
     [greyscaleFilter],
-    [maskChannel(0xFF0000FF)],
-    [maskChannel(0x00FF00FF)],
-    [maskChannel(0x0000FFFF)],
-    [threshold(0xFF0000FF)],
-    [threshold(0x00FF00FF)],
-    [threshold(0x0000FFFF)],
+    [maskChannelFilter(0xFF0000FF)],
+    [maskChannelFilter(0x00FF00FF)],
+    [maskChannelFilter(0x0000FFFF)],
+    [thresholdFilter(0xFF0000FF)],
+    [thresholdFilter(0x00FF00FF)],
+    [thresholdFilter(0x0000FFFF)],
     [() => {}],
 ];
