@@ -1,12 +1,15 @@
 class Cell
 {
-    constructor(_img, _filter)
+    constructor(_img, _filters)
     {
         this.background = color(random(255), random(255), random(255));
         this.img = _img.get();
 
-        if (_filter !== undefined)
-            _filter(this.img);
+        for (const filter of _filters)
+            filter(this.img);
+
+        // if (_filter !== undefined)
+        //     _filter(this.img);
     }
 
     draw(_x, _y, _width, _height)
@@ -15,4 +18,15 @@ class Cell
     }
 }
 
-const filters = [() => {}, GreyscaleFilter, redFilter, greenFilter, blueFilter];
+const filterPipelines = [
+    [() => {}],
+    [GreyscaleFilter],
+    [redFilter],
+    [greenFilter],
+    [blueFilter],
+    /*[SegmentedImage1],
+    [SegmentedImage2],
+    [SegmentedImage3],*/
+    [greenFilter, GreyscaleFilter, redFilter],
+    [() => {}],
+];
