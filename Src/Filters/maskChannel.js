@@ -1,4 +1,4 @@
-function maskChannel(mask)
+function maskChannelFilter(mask)
 {
     return function(_img)
     {
