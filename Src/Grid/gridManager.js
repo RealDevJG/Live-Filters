@@ -1,5 +1,4 @@
 const scale = 1.6;
-// const scale = 2.5;
 
 class GridManager
 {
