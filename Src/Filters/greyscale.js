@@ -1,4 +1,4 @@
-function GreyscaleFilter(_img)
+function greyscaleFilter(_img)
 {
     _img.loadPixels();
     for (let y = 0; y < _img.height; ++y)
