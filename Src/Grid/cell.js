@@ -24,4 +24,6 @@ const filterPipelines = [
     [thresholdFilter(0x00FF00FF)],
     [thresholdFilter(0x0000FFFF)],
     [() => {}],
+    [convertColourSpace(toYUV)],
+    [convertColourSpace(toHSV)],
 ];
