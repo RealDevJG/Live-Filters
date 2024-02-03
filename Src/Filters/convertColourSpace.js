@@ -2,19 +2,13 @@ function convertColourSpace(toColourSpace)
 {
     return function(_img)
     {
-        _img.loadPixels();
-        for (let y = 0; y < _img.height; ++y)
+        perPixel(_img, (index) =>
         {
-            for (let x = 0; x < _img.width; ++x)
-            {
-                const index = (x + y * _img.width) * 4;
-                const colour = toColourSpace([_img.pixels[index + 0], _img.pixels[index + 1], _img.pixels[index + 2]]);
+            const colour = toColourSpace([_img.pixels[index + 0], _img.pixels[index + 1], _img.pixels[index + 2]]);
 
-                _img.pixels[index + 0] = red(colour);
-                _img.pixels[index + 1] = green(colour);
-                _img.pixels[index + 2] = blue(colour);
-            }
-        }
-        _img.updatePixels();
+            _img.pixels[index + 0] = colour.levels[0];
+            _img.pixels[index + 1] = colour.levels[1];
+            _img.pixels[index + 2] = colour.levels[2];
+        });
     }
 }

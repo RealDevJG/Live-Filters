@@ -1,3 +1,17 @@
+function perPixel(_img, _operation)
+{
+    _img.loadPixels();
+    for (let y = 0; y < _img.height; ++y)
+    {
+        for (let x = 0; x < _img.width; ++x)
+        {
+            const index = (x + y * _img.width) * 4;
+            _operation(index);
+        }
+    }
+    _img.updatePixels();
+}
+
 function setupSliders(element)
 {
     const size = 128;
