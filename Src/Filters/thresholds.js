@@ -1,15 +1,11 @@
-let thresholdSlider;
+let thresholdSlider1;
+let thresholdSlider2;
 
-function thresholdFilter(_mask, _threshold)
+function thresholdFilter(_mask, _sliderId)
 {
     return function(_img)
     {
-        let thresholdValue;
-
-        if (_threshold)
-            thresholdValue = _threshold;
-        else
-            thresholdValue = thresholdSlider.value();
+        const threshold = document.getElementById(_sliderId).value;
 
         _img.loadPixels();
         for (let y = 0; y < _img.height; ++y)
@@ -30,17 +26,17 @@ function thresholdFilter(_mask, _threshold)
                 const maskedG = maskedColour >> 16 & 0x00FF;
                 const maskedB = maskedColour >> 8 & 0x0000FF;
 
-                if (maskedR >= thresholdValue)
+                if (maskedR >= threshold)
                     _img.pixels[index + 0] = maskedR;
                 else
                     _img.pixels[index + 0] = 0;
 
-                if (maskedG >= thresholdValue)
+                if (maskedG >= threshold)
                     _img.pixels[index + 1] = maskedG;
                 else
                     _img.pixels[index + 1] = 0;
 
-                if (maskedB >= thresholdValue)
+                if (maskedB >= threshold)
                     _img.pixels[index + 2] = maskedB;
                 else
                     _img.pixels[index + 2] = 0;
