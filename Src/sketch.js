@@ -5,17 +5,15 @@ const imgHeight = 120;
 
 function preload()
 {
-    img = loadImage("Assets/test-image.jpg");
+    img = loadImage("Assets/test-image.jpg", () => img.resize(imgWidth, imgHeight));
 }
 
 function setup()
 {
-    createCanvas(1280, 720);
+    const canvas = createCanvas(1280, 720);
     pixelDensity(1);
 
-    img.resize(imgWidth, imgHeight);
-    thresholdSlider = createSlider(0, 255, 160);
-
+    setupSliders(canvas.elt);
     GridManager.setup();
 }
 

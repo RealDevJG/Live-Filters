@@ -1,3 +1,18 @@
+function setupSliders(element)
+{
+    const size = 128;
+
+    thresholdSlider1 = createSlider(0, 255, 160);
+    thresholdSlider1.size(size);
+    thresholdSlider1.id("thresholdSlider1");
+    thresholdSlider1.position(element.offsetLeft + size / 2, element.offsetTop - 25);
+
+    thresholdSlider2 = createSlider(0, 255, 200);
+    thresholdSlider2.size(size);
+    thresholdSlider2.id("thresholdSlider2");
+    thresholdSlider2.position(element.offsetLeft + size * 1.5, element.offsetTop - 25);
+}
+
 function toYUV(_colour)
 {
     const r = _colour[0] / 255.0;
@@ -7,7 +22,7 @@ function toYUV(_colour)
     const X = 0.431 * r + 0.342 * g + 0.178 * b;
     const Y = 0.222 * r + 0.707 * g + 0.071 * b;
     const Z = 0.020 * r + 0.130 * g + 0.939 * b;
-    
+
     return color(X * 255.0, Y * 255.0, Z * 255.0);
 }
 

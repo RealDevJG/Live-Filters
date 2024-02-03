@@ -20,12 +20,12 @@ const filterPipelines = [
     [maskChannelFilter(0xFF0000FF)], // Red channel only of image
     [maskChannelFilter(0x00FF00FF)], // Green channel only of image
     [maskChannelFilter(0x0000FFFF)], // Blue channel only of image
-    [thresholdFilter(0xFF0000FF)], // Red channel only of image thresholded
-    [thresholdFilter(0x00FF00FF)], // Green channel only of image thresholded
-    [thresholdFilter(0x0000FFFF)], // Blue channel only of image thresholded
+    [thresholdFilter(0xFF0000FF, "thresholdSlider1")], // Red channel only of image thresholded by first slider
+    [thresholdFilter(0x00FF00FF, "thresholdSlider1")], // Green channel only of image thresholded by first slider
+    [thresholdFilter(0x0000FFFF, "thresholdSlider1")], // Blue channel only of image thresholded by first slider
     [() => {}], // Original image again (as requested by the instructions pdf)
     [convertColourSpace(toYUV)], // Converted to European Y’U’V’ (EBU)
     [convertColourSpace(toHSV)], // Converted to HSV
-    [convertColourSpace(toYUV), thresholdFilter(0xFFFFFFFF, 200)], // Converted to European Y’U’V’ (EBU) and then all channels thresholded with static threshold of 200
-    [convertColourSpace(toHSV), thresholdFilter(0xFFFFFFFF, 200)] // Converted to HSV and then all channels thresholded with static threshold of 200
+    [convertColourSpace(toYUV), thresholdFilter(0xFFFFFFFF, "thresholdSlider2")], // Converted to European Y’U’V’ (EBU) and then all channels thresholded by 2nd slider
+    [convertColourSpace(toHSV), thresholdFilter(0xFFFFFFFF, "thresholdSlider2")] // Converted to HSV and then all channels thresholded by 2nd slider
 ];
