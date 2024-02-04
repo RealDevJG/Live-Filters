@@ -1,6 +1,15 @@
+function applyFilters(_img, _filters)
+{
+    for (const applyFilter of _filters)
+        applyFilter(_img);
+}
+
 function perPixel(_img, _operation)
 {
-    _img.loadPixels();
+    // If image is already loaded, don't waste time loading it again
+    if (_img.pixels.length === 0)
+        _img.loadPixels();
+
     for (let y = 0; y < _img.height; ++y)
     {
         for (let x = 0; x < _img.width; ++x)
@@ -9,22 +18,23 @@ function perPixel(_img, _operation)
             _operation(index);
         }
     }
+
     _img.updatePixels();
 }
 
-function setupSliders(element)
+function setupSliders(_element)
 {
     const size = 128;
 
     thresholdSlider1 = createSlider(0, 255, 160);
     thresholdSlider1.size(size);
     thresholdSlider1.id("thresholdSlider1");
-    thresholdSlider1.position(element.offsetLeft + size / 2, element.offsetTop - 25);
+    thresholdSlider1.position(_element.offsetLeft + size / 2, _element.offsetTop - 25);
 
     thresholdSlider2 = createSlider(0, 255, 200);
     thresholdSlider2.size(size);
     thresholdSlider2.id("thresholdSlider2");
-    thresholdSlider2.position(element.offsetLeft + size * 1.5, element.offsetTop - 25);
+    thresholdSlider2.position(_element.offsetLeft + size * 1.5, _element.offsetTop - 25);
 }
 
 function toYUV(_colour)
@@ -63,15 +73,15 @@ function toHSV(_colour)
         const G = (maxValue - g) / range;
         const B = (maxValue - b) / range;
 
-        if (R == maxValue && G == minValue)
+        if (R === maxValue && G === minValue)
             hue = 5 + B;
-        else if (R == maxValue && G != minValue)
+        else if (R === maxValue && G !== minValue)
             hue = 1 - G;
-        else if (G == maxValue && B == minValue)
+        else if (G === maxValue && B === minValue)
             hue = 1 + R;
-        else if (G == maxValue && B != minValue)
+        else if (G === maxValue && B !== minValue)
             hue = 3 - B;
-        else if (R == maxValue)
+        else if (R === maxValue)
             hue = 3 + G;
         else
             hue = 5 - R;

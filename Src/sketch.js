@@ -14,21 +14,23 @@ function setup()
     pixelDensity(1);
 
     setupSliders(canvas.elt);
-    GridManager.setup();
+    GridManager.setupCells();
 }
 
 function draw()
 {
     background(125);
     GridManager.drawCells();
+
+    // TODO refactor
+    if (mouseIsPressed)
+    {
+        if (frameCount % 2 === 0)
+            GridManager.updateCells();
+    }
 }
 
 function mouseReleased()
 {
-    GridManager.setup();
-}
-
-function mouseDragged()
-{
-    GridManager.setup();
+    GridManager.updateCells();
 }
