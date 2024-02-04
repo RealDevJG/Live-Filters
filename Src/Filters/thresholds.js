@@ -6,6 +6,7 @@ function thresholdFilter(_mask, _sliderId)
     return function(_img)
     {
         const threshold = document.getElementById(_sliderId).value;
+        const uint32Colour = new Uint32Array(new ArrayBuffer(4));
 
         perPixel(_img, (index) =>
         {
@@ -14,7 +15,6 @@ function thresholdFilter(_mask, _sliderId)
             const b = _img.pixels[index + 2];
             const a = _img.pixels[index + 3];
 
-            const uint32Colour = new Uint32Array(new ArrayBuffer(4));
             uint32Colour[0] = (r << 24) | (g << 16) | (b << 8) | a;
 
             const maskedColour = uint32Colour[0] & _mask;
