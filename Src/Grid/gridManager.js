@@ -42,4 +42,12 @@ class GridManager
             cell.draw(x, y, GridManager.s_Width, GridManager.s_Height);
         }
     }
+
+    static updateAndDrawCells()
+    {
+        GridManager.drawCells();
+
+        if (mouseIsPressed && frameCount % 2 === 0)
+            GridManager.updateCells();
+    }
 }

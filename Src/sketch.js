@@ -20,17 +20,5 @@ function setup()
 function draw()
 {
     background(125);
-    GridManager.drawCells();
-
-    // TODO refactor
-    if (mouseIsPressed)
-    {
-        if (frameCount % 2 === 0)
-            GridManager.updateCells();
-    }
-}
-
-function mouseReleased()
-{
-    GridManager.updateCells();
+    GridManager.updateAndDrawCells();
 }
