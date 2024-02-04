@@ -21,7 +21,7 @@ class Cell
     }
 }
 
-// The first parameter in each pipeline is a bool to declare if that specific pipeline should be updated on mouseDrag/mouseRelease
+// The first parameter in each pipeline is a bool to declare if that specific pipeline should be updated on the slider change
 const filterPipelines = [
     [false, () => {}], // Original Image unaltered image
     [false, greyscaleFilter], // Greyscale image
