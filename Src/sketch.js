@@ -10,7 +10,7 @@ function preload()
 
 function setup()
 {
-    const canvas = createCanvas(imgWidth * scale * 3, imgHeight * 6 * scale);
+    const canvas = createCanvas(imgWidth * scale * 3, imgHeight * scale * 6);
     pixelDensity(1);
 
     setupSliders(canvas.elt);
@@ -23,8 +23,7 @@ function draw()
     GridManager.updateAndDrawCells();
 }
 
-function mouseReleased()
+function keyPressed()
 {
-    // Will eventually change to trigger on both keyPressed OR on screenshot save from webcam instead of mouseReleased
-    GridManager.mouseReleased();
+    GridManager.keyPressed();
 }

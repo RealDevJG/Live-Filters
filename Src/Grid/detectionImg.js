@@ -22,30 +22,34 @@ class DetectionImg extends Img
             {
                 this.faceImg = extractFace(this.img, _err, _detection);
                 this.faceImgCopy = this.faceImg.get();
+                this.detection = _detection;
 
                 applyNextFilter(this.faceImg, this.filters, ++this.activeIndex);
             });
         });
     }
 
-    // TODO change to apply based on keyPresses instead of mouse click
-    // and make q go --activeIndex whilst e goes ++activeIndex
     update()
     {
+        if (this.faceImg === null)
+            return;
+
         this.faceImg = this.faceImgCopy.get();
-        applyNextFilter(this.faceImg, this.filters, ++this.activeIndex);
+
+        if (key === "q")
+            applyNextFilter(this.faceImg, this.filters, --this.activeIndex);
+        else if (key === "e")
+            applyNextFilter(this.faceImg, this.filters, ++this.activeIndex);
     }
 
     draw(_canvas, _width, _height)
     {
         if (this.faceImg)
         {
-            const faceWidth = this.faceImg.width * scale;
-            const faceHeight = this.faceImg.height * scale;
+            const { x, y, width, height } = this.detection.alignedRect._box;
 
-            // TODO overlay with actual face original location
-            image(this.faceImg, width - faceWidth, height - faceHeight, faceWidth, faceHeight);
             _canvas.image(this.img, 0, 0, _width, _height);
+            _canvas.image(this.faceImg, x * scale, y * scale, width * scale, height * scale);
         }
         else
         {

@@ -1,3 +1,8 @@
+function convolute()
+{
+    
+}
+
 function randomHex()
 {
     // 16777215 because that's what the max hex value for RGB (0xFFFFFF) excluding alpha is in decimal

@@ -21,7 +21,8 @@ const pipelines = [
     [false, convertColourSpace(toHSV)],
 
     // Face detection image
-    [false, maskChannelFilter(0x000000FF), convertColourSpace(toYUV), maskChannelFilter(randomHex()), maskChannelFilter(randomHex()), maskChannelFilter(randomHex())],
+    // [false, maskChannelFilter(0x000000FF), convertColourSpace(toYUV), maskChannelFilter(randomHex()), maskChannelFilter(randomHex()), maskChannelFilter(randomHex())],
+    [false, greyscaleFilter, blurFilter, convertColourSpace(toHSV), pixelateFilter],
 
     // Thresholded & colourspace conversion filters at the same time controlled by second slider
     [true, convertColourSpace(toYUV), thresholdFilter(0xFFFFFFFF, "thresholdSlider2")],
