@@ -6,9 +6,11 @@ class GridManager
     static s_Width = imgWidth * scale;
     static s_Height = imgHeight * scale;
 
-    // Will eventually change to trigger on both keyPressed OR on screenshot save from webcam
-    static mouseReleased()
+    static keyPressed()
     {
+        if (key !== "q" && key !== "e")
+            return;
+
         for (const cell of GridManager.s_Grid)
         {
             const cellImage = Object.values(cell)[0];
