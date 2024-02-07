@@ -5,39 +5,44 @@ function thresholdFilter(_mask, _sliderId)
 {
     return function(_img)
     {
-        const threshold = document.getElementById(_sliderId).value;
+        // Make an unsigned 32 bit integer view into an ArrayBuffer of 4 bytes (1 byte each for R, G, B, A), so we can use bitwise manipulation with a mask like in C++
         const uint32Colour = new Uint32Array(new ArrayBuffer(4));
+        const threshold = document.getElementById(_sliderId).value;
 
-        perPixel(_img, (index) =>
+        perPixel(_img, (_index) =>
         {
-            const r = _img.pixels[index + 0];
-            const g = _img.pixels[index + 1];
-            const b = _img.pixels[index + 2];
-            const a = _img.pixels[index + 3];
+            // Shift R, G, B, A values into the appropriate position in the binary representation and OR them together to make it a single number
+            uint32Colour[0] = (_img.pixels[_index + 0] << 24) | 
+                              (_img.pixels[_index + 1] << 16) | 
+                              (_img.pixels[_index + 2] << 8) | 
+                              _img.pixels[_index + 3];
 
-            uint32Colour[0] = (r << 24) | (g << 16) | (b << 8) | a;
-
+            // Mask the binary representation with the binary representation of the hex mask provided,
+            // then extract each R, G, B back out again (alpha not needed yet as that can be extracted later on simply and readably)
             const maskedColour = uint32Colour[0] & _mask;
             const maskedR = maskedColour >> 24 & 0xFF;
             const maskedG = maskedColour >> 16 & 0x00FF;
             const maskedB = maskedColour >> 8 & 0x0000FF;
 
+            // Check seperately if R, G, B are within the threshold or not. If they are set the appropriate pixel channel to that colour
+            // else, discard the colour channel of that pixel (set to 0)
             if (maskedR >= threshold)
-                _img.pixels[index + 0] = maskedR;
+                _img.pixels[_index + 0] = maskedR;
             else
-                _img.pixels[index + 0] = 0;
+                _img.pixels[_index + 0] = 0;
 
             if (maskedG >= threshold)
-                _img.pixels[index + 1] = maskedG;
+                _img.pixels[_index + 1] = maskedG;
             else
-                _img.pixels[index + 1] = 0;
+                _img.pixels[_index + 1] = 0;
 
             if (maskedB >= threshold)
-                _img.pixels[index + 2] = maskedB;
+                _img.pixels[_index + 2] = maskedB;
             else
-                _img.pixels[index + 2] = 0;
+                _img.pixels[_index + 2] = 0;
 
-            _img.pixels[index + 3] = maskedColour & 0x000000FF;
+            // Extract and set the alpha that was masked
+            _img.pixels[_index + 3] = maskedColour & 0x000000FF;
         });
-    }
+    };
 }
