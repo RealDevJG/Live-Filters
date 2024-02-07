@@ -1,3 +1,5 @@
+// Convolution function adapted from the lecture videos because the lecture video function had an issue, where the left and bottom sides
+// of the convoluted image were black as they were using non-existent pixels out of bounds of the image
 function convolute(_img, _x, _y, _kernel)
 {
     const kernelSize = _kernel.length;
@@ -21,21 +23,23 @@ function convolute(_img, _x, _y, _kernel)
     return colour;
 }
 
+// Generate a random hexadecimal value using Number() and string representations for random colour masks: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
 function randomHex()
 {
     // 16777215 because that's what the max hex value for RGB (0xFFFFFF) excluding alpha is in decimal
     return Number("0x" + Math.floor(Math.random() * 16777215).toString(16) + "FF");
 }
 
-function perPixel(_img, _operation)
+// Allows you to loop over an entire image pixel array, perform an operation, then update the pixels to display the changes
+function perPixel(_img, _operation, xStart = 0, yStart = 0, xInc = 1, yInc = 1)
 {
     // If image is already loaded, don't waste time loading it again
     if (_img.pixels.length === 0)
         _img.loadPixels();
 
-    for (let y = 0; y < _img.height; ++y)
+    for (let y = yStart; y < _img.height; y += yInc)
     {
-        for (let x = 0; x < _img.width; ++x)
+        for (let x = xStart; x < _img.width; x += xInc)
         {
             const index = (x + y * _img.width) * 4;
             _operation(index, x, y);
@@ -45,15 +49,25 @@ function perPixel(_img, _operation)
     _img.updatePixels();
 }
 
-function setupSliders(_element)
+// Sets up the two threshold sliders in the correct position. These do not move when your window resizes so if they seem to be in the wrong place: refresh the page
+function setupSliders(_canvas)
 {
     const size = 128;
 
     thresholdSlider1 = createSlider(0, 255, 160).size(size);
     thresholdSlider1.id("thresholdSlider1");
-    thresholdSlider1.position(_element.offsetLeft - size / 2, _element.offsetTop);
+    thresholdSlider1.position(_canvas.offsetLeft - size / 2, _canvas.offsetTop);
 
     thresholdSlider2 = createSlider(0, 255, 130).size(size);
     thresholdSlider2.id("thresholdSlider2");
-    thresholdSlider2.position(_element.offsetLeft - size / 2, _element.offsetTop * 2.5);
+    thresholdSlider2.position(_canvas.offsetLeft - size / 2, _canvas.offsetTop * 2.5);
+}
+
+// Set the pixel density, sliders, and willReadFrequently attribute on the canvas
+function additionalSetup(_canvas)
+{
+    _canvas.setAttribute("willReadFrequently", true);
+    pixelDensity(1);
+
+    setupSliders(_canvas);
 }

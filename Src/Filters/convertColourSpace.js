@@ -2,15 +2,16 @@ function convertColourSpace(toColourSpace)
 {
     return function(_img)
     {
-        perPixel(_img, (index) =>
+        perPixel(_img, (_index) =>
         {
-            const colour = toColourSpace([_img.pixels[index + 0], _img.pixels[index + 1], _img.pixels[index + 2]]);
+            // Call the function pointer that was passed into the parameter list - either toYUV() or toHSV()
+            const colour = toColourSpace([_img.pixels[_index + 0], _img.pixels[_index + 1], _img.pixels[_index + 2]]);
 
-            _img.pixels[index + 0] = colour.levels[0];
-            _img.pixels[index + 1] = colour.levels[1];
-            _img.pixels[index + 2] = colour.levels[2];
+            _img.pixels[_index + 0] = colour.levels[0];
+            _img.pixels[_index + 1] = colour.levels[1];
+            _img.pixels[_index + 2] = colour.levels[2];
         });
-    }
+    };
 }
 
 // Convert to European Y’U’V’ (EBU)
@@ -44,26 +45,26 @@ function toHSV(_colour)
 
     const saturation = range / maxValue;
 
-    let hue = 0;
-    if (saturation !== 0)
+    let hue = 0.0;
+    if (saturation !== 0.0)
     {
         const R = (maxValue - r) / range;
         const G = (maxValue - g) / range;
         const B = (maxValue - b) / range;
 
         if (R === maxValue && G === minValue)
-            hue = 5 + B;
+            hue = 5.0 + B;
         else if (R === maxValue && G !== minValue)
-            hue = 1 - G;
+            hue = 1.0 - G;
         else if (G === maxValue && B === minValue)
-            hue = 1 + R;
+            hue = 1.0 + R;
         else if (G === maxValue && B !== minValue)
-            hue = 3 - B;
+            hue = 3.0 - B;
         else if (R === maxValue)
-            hue = 3 + G;
+            hue = 3.0 + G;
         else
-            hue = 5 - R;
+            hue = 5.0 - R;
     }
 
-    return color(map(hue, 0, 6, 0, 255), saturation * 255, maxValue * 255);
+    return color(map(hue, 0.0, 6.0, 0.0, 255.0), saturation * 255.0, maxValue * 255.0);
 }
