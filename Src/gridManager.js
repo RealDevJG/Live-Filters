@@ -8,38 +8,20 @@ class GridManager
     static s_Height = imgHeight * scale;
 
     // Creates a separate canvas to house the image that will be affected by filter pipelines
-    static addCell(_image, _shouldUpdate)
+    static addCell(_img)
     {
         const canvas = createGraphics(GridManager.s_Width, GridManager.s_Height);
         canvas.elt.setAttribute("willReadFrequently", true);
 
-        // Pushes an object that contains 2 key-value pairs: 1. false/true: imageObject, 2. a canvas object
-        // true/false is whether the canvas will update on slider changes so that I don't have to waste computation power updating static filters
-        GridManager.s_Grid.push({
-            [_shouldUpdate]: _image,
-            canvas
-        });
+        GridManager.s_Grid.push({_img, canvas});
     }
 
-    // Adds one unaltered image to the grid for every entry in the pipelines array found in pipelines.js
     static setupCells()
     {
         for (let i = 0; i < pipelines.length; ++i)
         {
-            const shouldUpdate = pipelines[i][0];
-            const pipeline = pipelines[i].slice(1); // slice off the true/false shouldUpdate part of the array as it's no longer required
-
-            // The 12th image should be the detection one for facial recognition
-            if (i === 12)
-                var image = new DetectionImg(img, pipeline);
-            else
-                var image = new Img(img, pipeline);
-
-            GridManager.addCell(image, shouldUpdate);
-
-            // Only call init on regular images because the init function applies the filter passes to the entire image instead of only the face
-            if (!(image instanceof DetectionImg))
-                image.init();
+            pipelines[i].init();
+            GridManager.addCell(pipelines[i]);
         }
     }
 
@@ -49,22 +31,24 @@ class GridManager
         if (key !== "q" && key !== "e")
             return;
 
-        for (const cell of GridManager.s_Grid)
+        for (const object of GridManager.s_Grid)
         {
-            const cellImage = Object.values(cell)[0];
+            const cell = Object.values(object)[0];
 
-            if (cellImage instanceof DetectionImg)
-                cellImage.update();
+            if (cell instanceof DetectionImg)
+                cell.update();
         }
     }
 
     // Update all image types only if they have a value key of true (that first parameter in the pipelines array)
     static updateCells()
     {
-        for (const cell of GridManager.s_Grid)
+        for (const object of GridManager.s_Grid)
         {
-            if (cell[true] !== undefined)
-                cell[true].update();
+            const cell = Object.values(object)[0];
+
+            if ("update" in cell && !(cell instanceof DetectionImg))
+                cell.update();
         }
     }
 
@@ -90,8 +74,6 @@ class GridManager
     static updateAndDrawCells()
     {
         GridManager.drawCells();
-
-        if (mouseIsPressed && frameCount % 2 === 0)
-            GridManager.updateCells();
+        GridManager.updateCells();
     }
 }

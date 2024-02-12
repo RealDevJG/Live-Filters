@@ -69,12 +69,14 @@ function additionalSetup(_canvas)
     _canvas.setAttribute("willReadFrequently", true);
     pixelDensity(1);
 
+    // Docs where I found out what constraints I could put: https://w3c.github.io/mediacapture-main/getusermedia.html#media-track-constraints
     const constraints = {
         video: {
             mandatory: {
                 maxWidth: imgWidth,
                 maxHeight: imgHeight
-            }
+            },
+            optional: [{ maxFrameRate: 20 }]
         },
         audio: false
     };
@@ -82,5 +84,6 @@ function additionalSetup(_canvas)
     webcam = createCapture(constraints);
     webcam.hide();
 
+    frameRate(20);
     setupSliders(_canvas);
 }

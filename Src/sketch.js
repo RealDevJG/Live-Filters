@@ -1,10 +1,6 @@
 let img;
 let webcam;
 
-// Target computation width/height, not draw width/height
-const imgWidth = 160;
-const imgHeight = 120;
-
 // preload a static image instead of live webcam (for now)
 function preload()
 {
@@ -17,7 +13,7 @@ function setup()
     const canvas = createCanvas(imgWidth * scale * 3, imgHeight * scale * 6);
     additionalSetup(canvas.elt);
 
-    GridManager.setupCells();
+    GridManager.setupCells(pipelines);
 }
 
 function draw()

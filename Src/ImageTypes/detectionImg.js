@@ -1,17 +1,22 @@
 // I probably shouldn't have used inheritence as most functions are reimplemented anyway and this is not a good use of inheritence
 // Now we have super.img, super.imageCopy, this.faceImg because of the super constructor...
-class DetectionImg extends Img
+class DetectionImg
 {
-    constructor(_img, _filters)
+    constructor(_updater, _filters)
     {
-        super(_img, _filters);
-
         // Start at a high number so that --activeIndex doesn't go below 0 and crash. It's scaled through multiplication to make sure it starts at the first filter in the cycle always
         // The number being this big will mean that even someone using an auto clicker to press q enough times to make the index below -1 and crash the app will take
         // 34.7 days at 20 clicks per second 999999 / 20 clicks per sec / 60 mins / 24 hours = 34.7 days
         this.activeIndex = _filters.length * 999999;
 
+        this.filters = _filters;
+        this.updater = _updater;
+
         this.faceImg = null;
+    }
+
+    init()
+    {
         this.detectFace();
     }
 
@@ -41,10 +46,7 @@ class DetectionImg extends Img
     // "pipeline" is more of a cycle for DetectionImg
     update()
     {
-        if (key === "q")
-            --this.activeIndex;
-        else if (key === "e")
-            ++this.activeIndex;
+        this.updater();
     }
 
     // If the face has been detected, draw it over the original image after the correct filter has been applied in above functions,
@@ -59,6 +61,14 @@ class DetectionImg extends Img
             _canvas.image(this.faceImg, int(x) * scale, int(y) * scale, int(width) * scale, int(height) * scale);
         }
     }
+}
+
+function onKeyPress()
+{
+    if (key === "q")
+        --this.activeIndex;
+    else if (key === "e")
+        ++this.activeIndex;
 }
 
 // Extracts the face from an image using the ml5 library (Only currently working statically)
