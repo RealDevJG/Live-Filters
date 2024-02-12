@@ -32,5 +32,5 @@ const pipelines = [
     //  - particle filter (TODO)
     [false, maskChannelFilter(randomHex())],
     [false, fastPixelateFilter],
-    [false, maskChannelFilter(randomHex())],
+    [true, rainbowFilter],
 ];
