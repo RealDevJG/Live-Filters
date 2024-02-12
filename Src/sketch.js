@@ -1,4 +1,5 @@
 let img;
+let webcam;
 
 // Target computation width/height, not draw width/height
 const imgWidth = 160;
@@ -21,8 +22,9 @@ function setup()
 
 function draw()
 {
-    background(125);
+    background(255, 145, 175);
     GridManager.updateAndDrawCells();
+    image(webcam, 0, 0, imgWidth * scale, imgHeight * scale);
 }
 
 function keyPressed()

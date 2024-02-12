@@ -69,5 +69,18 @@ function additionalSetup(_canvas)
     _canvas.setAttribute("willReadFrequently", true);
     pixelDensity(1);
 
+    const constraints = {
+        video: {
+            mandatory: {
+                maxWidth: imgWidth,
+                maxHeight: imgHeight
+            }
+        },
+        audio: false
+    };
+
+    webcam = createCapture(constraints);
+    webcam.hide();
+
     setupSliders(_canvas);
 }
