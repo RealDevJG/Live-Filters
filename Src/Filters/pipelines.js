@@ -29,8 +29,10 @@ const pipelines = [
 
     // Extension filters:
     //  - Random colour channel masks
-    //  - particle filter (TODO)
+    //  - Rainbow filter
+    //  - "Scene" with particles inside
     new RegularImg([maskChannelFilter(randomHex())]),
     new UpdateableImg(onFrameChange, [rainbowFilter]),
-    new SceneryImg(snowyScene, [greyscaleFilter])
+    // new SceneryImg(snowyScene)
+    new SceneryImg(lavaBubbleScene)
 ];
