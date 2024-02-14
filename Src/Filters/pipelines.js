@@ -31,6 +31,6 @@ const pipelines = [
     //  - Random colour channel masks
     //  - particle filter (TODO)
     new RegularImg([maskChannelFilter(randomHex())]),
-    new RegularImg([fastPixelateFilter]),
     new UpdateableImg(onFrameChange, [rainbowFilter]),
+    new SceneryImg(snowyScene, [greyscaleFilter])
 ];

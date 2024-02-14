@@ -20,7 +20,7 @@ function draw()
 {
     background(255, 145, 175);
     GridManager.updateAndDrawCells();
-    image(webcam, 0, 0, imgWidth * scale, imgHeight * scale);
+    // image(webcam, 0, 0, imgWidth * scale, imgHeight * scale);
 }
 
 function keyPressed()

@@ -16,7 +16,6 @@ class UpdateableImg
         applyFilters(this.img, this.filters);
     }
 
-    // Revert back to original image and apply all filter passes in the pipeline
     update()
     {
         this.updater(this.img, this.filters, this.imgCopy);
