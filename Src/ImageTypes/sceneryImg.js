@@ -1,16 +1,15 @@
 class SceneryImg
 {
-    constructor(scene, _filters)
+    constructor(scene)
     {
         this.img = null;
         this.scene = scene;
-        this.filters = _filters;
     }
 
     init()
     {
         this.img = img.get();
-        applyFilters(this.img, this.filters);
+        applyFilters(this.img, this.scene.filters);
     }
 
     update()

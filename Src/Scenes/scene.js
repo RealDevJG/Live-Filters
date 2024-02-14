@@ -1,15 +1,10 @@
 class Scene
 {
-    constructor(_emitters)
+    constructor(_emitters, _filters)
     {
-        // this.canvas = _canvas;
         this.emitters = _emitters;
+        this.filters = _filters;
     }
-
-    // addEmitter(_emitter)
-    // {
-    //     this.emitters.push(_emitter);
-    // }
 
     update()
     {

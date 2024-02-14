@@ -27,7 +27,7 @@ function convolute(_img, _x, _y, _kernel)
 function randomHex()
 {
     // 16777215 because that's what the max hex value for RGB (0xFFFFFF) excluding alpha is in decimal
-    return Number("0x" + Math.floor(Math.random() * 16777215).toString(16) + "FF");
+    return "0x" + Math.floor(Math.random() * 16777215).toString(16) + "FF";
 }
 
 // Allows you to loop over an entire image pixel array, perform an operation, then update the pixels to display the changes
