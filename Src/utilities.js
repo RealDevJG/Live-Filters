@@ -84,6 +84,6 @@ function additionalSetup(_canvas)
     webcam = createCapture(constraints);
     webcam.hide();
 
-    frameRate(20);
+    frameRate(60);
     setupSliders(_canvas);
 }
