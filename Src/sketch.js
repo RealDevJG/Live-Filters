@@ -14,6 +14,7 @@ function setup()
     additionalSetup(canvas.elt);
 
     GridManager.setupCells(pipelines);
+    setupSelectors(canvas.elt);
 }
 
 function draw()
