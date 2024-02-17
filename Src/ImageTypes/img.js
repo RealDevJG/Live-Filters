@@ -23,8 +23,8 @@ class Img
 }
 
 // Free function to apply entire filter pipelines because I want this function to be generic and work with all p5 images, not only my image class
-function applyFilters(_img, _filters)
+function applyFilters(_img, _filters, _additionalParam)
 {
     for (const applyFilter of _filters)
-        applyFilter(_img);
+        applyFilter(_img, _additionalParam);
 }

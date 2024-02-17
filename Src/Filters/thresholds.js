@@ -1,13 +1,12 @@
 let thresholdSlider1;
 let thresholdSlider2;
 
-function thresholdFilter(_mask, _sliderId)
+function thresholdFilter(_mask)
 {
-    return function(_img)
+    return function(_img, _threshold)
     {
         // Make an unsigned 32 bit integer view into an ArrayBuffer of 4 bytes (1 byte each for R, G, B, A), so we can use bitwise manipulation with a mask like in C++
         const uint32Colour = new Uint32Array(new ArrayBuffer(4));
-        const threshold = document.getElementById(_sliderId).value;
 
         perPixel(_img, (_index) =>
         {
@@ -15,7 +14,7 @@ function thresholdFilter(_mask, _sliderId)
             uint32Colour[0] = (_img.pixels[_index + 0] << 24) | 
                               (_img.pixels[_index + 1] << 16) | 
                               (_img.pixels[_index + 2] << 8) | 
-                              _img.pixels[_index + 3];
+                               _img.pixels[_index + 3];
 
             // Mask the binary representation with the binary representation of the hex mask provided,
             // then extract each R, G, B back out again (alpha not needed yet as that can be extracted later on simply and readably)
@@ -26,17 +25,17 @@ function thresholdFilter(_mask, _sliderId)
 
             // Check seperately if R, G, B are within the threshold or not. If they are set the appropriate pixel channel to that colour
             // else, discard the colour channel of that pixel (set to 0)
-            if (maskedR >= threshold)
+            if (maskedR >= _threshold)
                 _img.pixels[_index + 0] = maskedR;
             else
                 _img.pixels[_index + 0] = 0;
 
-            if (maskedG >= threshold)
+            if (maskedG >= _threshold)
                 _img.pixels[_index + 1] = maskedG;
             else
                 _img.pixels[_index + 1] = 0;
 
-            if (maskedB >= threshold)
+            if (maskedB >= _threshold)
                 _img.pixels[_index + 2] = maskedB;
             else
                 _img.pixels[_index + 2] = 0;

@@ -5,6 +5,8 @@ class UpdateableImg
         this.img = null;
         this.imgCopy = null; // backup so we can revert to the original image without taking a new snapshot
 
+        this.slider = null;
+
         this.updater = updater;
         this.filters = _filters;
     }
@@ -13,12 +15,24 @@ class UpdateableImg
     {
         this.img = img.get();
         this.imgCopy = img.get();
-        applyFilters(this.img, this.filters);
+
+        if (this.updater === onSliderChange)
+        {
+            this.slider = createSlider(0, 255, 135);
+            var value = this.slider.value();
+
+            this.slider.input(() => { this.updater(); });
+        }
+
+        applyFilters(this.img, this.filters, value);
     }
 
     update()
     {
-        this.updater(this.img, this.filters, this.imgCopy);
+        if (this.updater === onSliderChange)
+            return;
+
+        this.updater();
     }
 
     draw(_canvas, _width, _height)
@@ -27,16 +41,16 @@ class UpdateableImg
     }
 }
 
-function onSliderChange(_img, _filters)
+function onSliderChange()
 {
     if (mouseIsPressed && frameCount % 4 === 0)
     {
         this.img = this.imgCopy.get();
-        applyFilters(this.img, this.filters);
+        applyFilters(this.img, this.filters, this.slider.value());
     }
 }
 
-function onFrameChange(_img, _filters)
+function onFrameChange()
 {
     if (frameCount % 4 === 0)
     {

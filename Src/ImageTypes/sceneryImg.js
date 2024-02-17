@@ -5,6 +5,8 @@ class SceneryImg
         this.img = null;
         this.imgCopy = null;
 
+        this.dropdown = null;
+
         this.scene = scene;
     }
 
