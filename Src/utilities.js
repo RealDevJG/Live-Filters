@@ -49,30 +49,24 @@ function perPixel(_img, _operation, xStart = 0, yStart = 0, xInc = 1, yInc = 1)
     _img.updatePixels();
 }
 
-// Sets up the two threshold sliders in the correct position. These do not move when your window resizes so if they seem to be in the wrong place: refresh the page
-function setupSliders(_canvas)
+function setupInteractables(_canvas)
 {
     const size = 255;
 
-    thresholdSlider1 = createSlider(0, 255, 160);
-    thresholdSlider1.size(size);
-    thresholdSlider1.id("thresholdSlider1");
-    thresholdSlider1.position(0, _canvas.offsetTop);
-
-    thresholdSlider2 = createSlider(0, 255, 130);
-    thresholdSlider2.size(size);
-    thresholdSlider2.id("thresholdSlider2");
-    thresholdSlider2.position(0, _canvas.offsetTop * 2.5);
-}
-
-function setupSelectors(_canvas)
-{
-    let i = 5.0;
-    const size = 255;
-
+    let i = 0;
     for (const img of pipelines)
     {
-        if (img instanceof SceneryImg)
+        if (img instanceof UpdateableImg)
+        {
+            if (img.slider === null)
+                continue;
+
+            img.slider.size(size);
+            img.slider.position(0, _canvas.offsetTop * i);
+
+            i += 1.8;
+        }
+        else if (img instanceof SceneryImg)
         {
             img.dropdown.size(size);
             img.dropdown.position(0, _canvas.offsetTop * i);
@@ -104,5 +98,4 @@ function additionalSetup(_canvas)
     webcam.hide();
 
     frameRate(60);
-    setupSliders(_canvas);
 }
