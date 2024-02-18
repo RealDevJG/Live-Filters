@@ -1,6 +1,3 @@
-// The image used in the static branch
-let img;
-
 // Computation width/height, not the render width/height
 const imgWidth = 160;
 const imgHeight = 120;
@@ -24,11 +21,18 @@ class RegularImg
     init()
     {
         // Just get a plain image and do nothing with it so we can draw it plainly
-        this.img = img.get();
+        this.setImg()
     }
 
     draw(_canvas, _width, _height)
     {
         _canvas.image(this.img, 0, 0, _width, _height);
+    }
+
+    // Sets the new image to the webcam image
+    setImg()
+    {
+        const [img] = takeScreenshot();
+        this.img = img;
     }
 }

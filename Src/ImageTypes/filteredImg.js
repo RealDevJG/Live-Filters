@@ -9,13 +9,21 @@ class FilteredImg
     // Set the image that we'll be working on and then apply filters to it
     init()
     {
-        this.img = img.get();
-        applyFilters(this.img, this.filters);
+        this.setImgAndApplyFilters();
     }
 
     draw(_canvas, _width, _height)
     {
         _canvas.image(this.img, 0, 0, _width, _height);
+    }
+
+    // Sets the new image to the webcam image and applies filters onto it
+    setImgAndApplyFilters()
+    {
+        const [img] = takeScreenshot();
+        this.img = img;
+
+        applyFilters(this.img, this.filters);
     }
 }
 

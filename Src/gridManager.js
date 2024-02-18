@@ -9,16 +9,16 @@ class GridManager
         canvas.elt.setAttribute("willReadFrequently", true);
 
         // Map each img to its own canvas whilst still preserving encapsulation by avoiding passing the canvas into the img object
-        GridManager.s_Grid.push({_img, canvas});
+        GridManager.s_Grid.push({ _img, canvas });
     }
 
     // Make all img objects initialise and then pass them to addCell to allow for them to be mapped to their own individual canvases
     static setupCells()
     {
-        for (let i = 0; i < pipelines.length; ++i)
+        for (const pipeline of pipelines)
         {
-            pipelines[i].init();
-            GridManager.addCell(pipelines[i]);
+            pipeline.init();
+            GridManager.addCell(pipeline);
         }
     }
 
@@ -55,22 +55,40 @@ class GridManager
     // Update and draw all cells abstracted into a single call
     static updateAndDrawCells()
     {
-        GridManager.drawCells();
         GridManager.updateCells();
+        GridManager.drawCells();
     }
 
-    // Update all detection images if "q" or "e" are pressed
+    // Loop through all images and call the correct function depending on what function it has
+    // Updates the images to the current webcam frame
+    static setImages()
+    {
+        for (const cell of GridManager.s_Grid)
+        {
+            const img = Object.values(cell)[0];
+
+            if ("setImgAndApplyFilters" in img)
+                img.setImgAndApplyFilters();
+            else if ("setImg" in img)
+                img.setImg();
+        }
+    }
+
+    // Update all detection images if "q" or "e" are pressed, or take a screenshot of the webcam if "s" is pressed
     static keyPressed()
     {
-        if (key !== "q" && key !== "e")
-            return;
+        if (key === "s")
+            this.setImages();
 
-        for (const object of GridManager.s_Grid)
+        if (key === "q" || key === "e")
         {
-            const img = Object.values(object)[0];
+            for (const object of GridManager.s_Grid)
+            {
+                const img = Object.values(object)[0];
 
-            if (img instanceof DetectionImg)
-                img.update();
+                if (img instanceof DetectionImg)
+                    img.update();
+            }
         }
     }
 }

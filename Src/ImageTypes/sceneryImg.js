@@ -14,12 +14,7 @@ class SceneryImg
     init()
     {
         this.setupSelector();
-
-        this.img = img.get();
-        this.imgCopy = img.get();
-
-        // Apply the active scenes filters to the image
-        applyFilters(this.img, this.scene.filters);
+        this.setImgAndApplyFilters();
     }
 
     update()
@@ -68,5 +63,16 @@ class SceneryImg
         {
             this.setScene(this.interactable.value());
         });
+    }
+
+    // Sets the new image to the webcam image and applies filters onto it
+    setImgAndApplyFilters()
+    {
+        const [img, imgCopy] = takeScreenshot();
+
+        this.img = img;
+        this.imgCopy = imgCopy;
+
+        applyFilters(this.img, this.scene.filters);
     }
 }

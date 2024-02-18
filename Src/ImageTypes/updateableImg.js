@@ -15,8 +15,7 @@ class UpdateableImg
 
     init()
     {
-        this.img = img.get();
-        this.imgCopy = img.get();
+        this.setImgAndApplyFilters();
 
         // If the updater is onSliderChange, it means we need a slider so create one and set its event listener to call the updater method
         if (this.updater === onSliderChange)
@@ -42,6 +41,20 @@ class UpdateableImg
     draw(_canvas, _width, _height)
     {
         _canvas.image(this.img, 0, 0, _width, _height);
+    }
+
+    // Sets the new image to the webcam image and applies filters onto it
+    setImgAndApplyFilters()
+    {
+        const [img, imgCopy] = takeScreenshot();
+
+        this.img = img;
+        this.imgCopy = imgCopy;
+
+        if (this.interactable)
+            var value = this.interactable.value();
+
+        applyFilters(this.img, this.filters, value);
     }
 }
 
