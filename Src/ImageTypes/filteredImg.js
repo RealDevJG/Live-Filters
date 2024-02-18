@@ -1,19 +1,16 @@
-// Computation width/height, not draw width/height
-const imgWidth = 160;
-const imgHeight = 120;
-
-class Img
+class FilteredImg
 {
-    constructor()
+    constructor(_filters)
     {
         this.img = null;
+        this.filters = _filters;
     }
 
-    // All init functions in img classes need to exist instead of doing its operations in the
-    // constructor because the init functions load things after sketch.js has initialised its requisites
+    // Set the image that we'll be working on and then apply filters to it
     init()
     {
         this.img = img.get();
+        applyFilters(this.img, this.filters);
     }
 
     draw(_canvas, _width, _height)

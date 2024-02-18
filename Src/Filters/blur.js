@@ -21,7 +21,7 @@ function fastBlur(_img, _amount)
     _img.resize(_img.width * _amount, _img.height * _amount);
 }
 
-// Blurs the image using a convolution kernel
+// Blurs the image using a convolution kernel as shown in the lectures
 function blurFilter(_kernel)
 {
     return function(_img)
