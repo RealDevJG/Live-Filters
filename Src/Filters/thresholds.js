@@ -1,6 +1,3 @@
-let thresholdSlider1;
-let thresholdSlider2;
-
 function thresholdFilter(_mask)
 {
     return function(_img, _threshold)
