@@ -51,6 +51,13 @@ function perPixel(_img, _operation, _xStart = 0, _yStart = 0, _xInc = 1, _yInc =
     _img.updatePixels();
 }
 
+// Utility function to take a screenshot of the current webcam state and return them as two images
+// One copy is for the regular img and the second is for a copyImg if required
+function takeScreenshot()
+{
+    return [webcam.get(), webcam.get()];
+}
+
 // Positioning interactables such as sliders and dropdown boxes
 function setupInteractables(_canvas)
 {

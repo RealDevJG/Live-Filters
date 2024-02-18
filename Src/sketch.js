@@ -1,11 +1,5 @@
 let webcam;
 
-// Load a static image instead of live webcam for static branch
-function preload()
-{
-    img = loadImage("Assets/eliz1.png", () => img.resize(imgWidth, imgHeight));
-}
-
 // Setup a grid of 3x6 images to perform the filter operations on
 function setup()
 {
@@ -17,6 +11,9 @@ function draw()
 {
     background(255, 145, 175);
     GridManager.updateAndDrawCells();
+
+    // A live webcam feed in the top left corner of the screen
+    image(webcam, 0, 0, imgScaledWidth, imgScaledHeight);
 }
 
 function keyPressed()
