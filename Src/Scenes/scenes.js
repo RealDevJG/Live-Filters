@@ -1,3 +1,6 @@
+// This file is purely for creating and loading scene objects. If I had more time with my other final projects, I would have 
+// serialised objects and scenes into a file which I could parse into this application on start-up to load the scenes from
+
 // All of these variables are written as constants to avoid "magic numbers" and to make them more descriptive instead of just seeing
 // new Scene("", vec(...), vec(...), vec(...), 8, "#FFFFFF", 15, 5, particle, emitter) as this would make it harder to know what each parameter is
 
